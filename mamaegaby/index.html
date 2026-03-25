@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Feliz Aniversário, Érica! 💖</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(145deg, #ffdde1 0%, #f9c9e2 100%);
+            font-family: 'Segoe UI', 'Poppins', 'Quicksand', system-ui, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1.5rem;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            opacity: 0.7;
+            top: -10px;
+            z-index: 999;
+            animation: fall linear forwards;
+            pointer-events: none;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        .card {
+            max-width: 750px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.96);
+            border-radius: 3rem;
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            animation: fadeInUp 0.8s ease;
+            position: relative;
+            z-index: 10;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(40px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .candle-section {
+            background: linear-gradient(135deg, #fff5e6, #ffe0c0);
+            padding: 2rem 1.5rem 2rem;
+            text-align: center;
+            border-bottom: 3px solid #ffb77c;
+            cursor: pointer;
+        }
+
+        .candle {
+            position: relative;
+            width: 50px;
+            height: 100px;
+            background: #f9ac67;
+            border-radius: 25px 25px 12px 12px;
+            box-shadow: 0 10px 0 #c26e2e;
+            cursor: pointer;
+            margin: 0 auto;
+            transition: transform 0.1s ease;
+        }
+
+        .candle:active {
+            transform: scale(0.96);
+        }
+
+        .flame {
+            position: absolute;
+            top: -18px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px;
+            height: 35px;
+            background: radial-gradient(circle, #ffdd77, #ff8c00);
+            border-radius: 50% 50% 20% 20%;
+            box-shadow: 0 0 12px 4px #ffb347;
+            transition: all 0.2s ease;
+            pointer-events: none;
+        }
+
+        .flame-out {
+            opacity: 0;
+            transform: translateX(-50%) scale(0.2);
+            box-shadow: none;
+        }
+
+        .blow-hint {
+            font-size: 1rem;
+            background: #fff0e0;
+            display: inline-block;
+            padding: 0.5rem 1.2rem;
+            border-radius: 60px;
+            color: #c25d2e;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+
+        .gift-content {
+            padding: 1.8rem 2rem 2rem;
+        }
+
+        .locked-message {
+            text-align: center;
+            background: #fef3e8;
+            border-radius: 2rem;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .locked-message p {
+            font-size: 1.2rem;
+            color: #b45a2e;
+            font-weight: 500;
+        }
+
+        .finalize-btn {
+            background: #ff9f6e;
+            border: none;
+            width: 100%;
+            padding: 1rem;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: white;
+            border-radius: 3rem;
+            cursor: pointer;
+            margin-top: 0.8rem;
+            box-shadow: 0 5px 0 #b45a2a;
+            font-family: inherit;
+        }
+
+        .finalize-btn:active {
+            transform: translateY(2px);
+            box-shadow: 0 2px 0 #b45a2a;
+        }
+
+        .revealed-area {
+            display: none;
+            animation: revealZoom 0.5s ease;
+        }
+
+        @keyframes revealZoom {
+            from { opacity: 0; transform: scale(0.96);}
+            to { opacity: 1; transform: scale(1);}
+        }
+
+        .mensagem-box {
+            background: #fff7f0;
+            border-radius: 2rem;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border-left: 8px solid #ff8a5c;
+        }
+
+        .mensagem-box p {
+            font-size: 1.2rem;
+            line-height: 1.5;
+            color: #3b2a24;
+            font-weight: 500;
+            font-style: italic;
+        }
+
+        .mensagem-box .assinatura {
+            margin-top: 0.8rem;
+            text-align: right;
+            font-weight: 600;
+            color: #c25d2e;
+        }
+
+        .fotos-area h2 {
+            font-size: 1.6rem;
+            color: #b64926;
+            margin: 1rem 0 0.8rem 0;
+            border-left: 5px solid #ff9068;
+            padding-left: 1rem;
+        }
+
+        .grid-fotos {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.2rem;
+            margin-bottom: 1.8rem;
+        }
+
+        .photo-card {
+            background: #ffe5d0;
+            border-radius: 1.2rem;
+            overflow: hidden;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+            aspect-ratio: 1 / 1;
+            position: relative;
+        }
+
+        .photo-card:hover {
+            transform: scale(1.02);
+        }
+
+        .photo-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .photo-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0,0,0,0.75));
+            color: white;
+            padding: 0.7rem 0.5rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .musica-area {
+            margin-top: 1.5rem;
+            text-align: center;
+        }
+
+        .musica-area h2 {
+            font-size: 1.6rem;
+            color: #b64926;
+            margin: 1rem 0 0.8rem 0;
+            border-left: 5px solid #ff9068;
+            padding-left: 1rem;
+            text-align: left;
+        }
+
+        .music-message {
+            background: #fff1e6;
+            border-radius: 1.5rem;
+            padding: 1.8rem;
+            text-align: center;
+            margin: 1rem 0;
+        }
+
+        .music-message p {
+            font-size: 1.1rem;
+            color: #b64926;
+            margin-bottom: 0.5rem;
+        }
+
+        .music-message .music-icon {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        footer {
+            text-align: center;
+            font-size: 0.7rem;
+            padding: 1rem;
+            color: #b97f62;
+            background: #fff0e6;
+        }
+
+        @media (max-width: 550px) {
+            .grid-fotos {
+                grid-template-columns: 1fr 1fr;
+                gap: 0.8rem;
+            }
+            .gift-content {
+                padding: 1.2rem;
+            }
+            .mensagem-box p {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <!-- Seção da Vela -->
+    <div class="candle-section" id="candleSection">
+        <div class="candle" id="candleElem">
+            <div class="flame" id="flameElem"></div>
+        </div>
+        <div class="blow-hint" id="blowHint">
+            💨 Clique para assoprar a vela 💨
+        </div>
+    </div>
+
+    <!-- Conteúdo do presente -->
+    <div class="gift-content" id="giftContent">
+        <div class="locked-message" id="lockedMsg">
+            <p>Finalize para desbloquear seu presente</p>
+            <button class="finalize-btn" id="finalizeBtn">✨ Clique aqui para continuar!! ✨</button>
+        </div>
+
+        <!-- Área revelada -->
+        <div class="revealed-area" id="revealedArea">
+            <div class="mensagem-box">
+                <p>
+                    💖 Você é meu maior exemplo de força, determinação e bondade. Tenho muito orgulho de ser sua filha, e apesar de tudo, amo você!!<br>
+                    Feliz aniversário mãe, parabéns! 🎂🎉
+                </p>
+                <div class="assinatura">— Com amor, gaby</div>
+            </div>
+
+            <div class="fotos-area">
+                <h2>Obrigada por...</h2>
+                <div class="grid-fotos" id="fotosGrid"></div>
+            </div>
+
+            <div style="text-align: center; padding: 0.8rem 1rem 1.2rem; background: #fff0e6; border-top: 1px solid #ffd4b5;">
+        <a href="https://youtu.be/bsN1_oRPLns?si=al7P45Ohs-wDaZFB&t=43" target="_blank" style="color: #b64926; text-decoration: none; font-size: 0.85rem; font-weight: 500; display: inline-flex; align-items: center; gap: 6px;">
+            🎵 Clique aqui para ouvir a música especial 🎵
+        </a>
+    </div>
+    
+        </div>
+    </div>
+    <footer>✨ Mãe, tudo de bom pra você! ✨</footer>
+</div>
+
+<script>
+    // ============================================
+    // SUAS FOTOS - COLOQUE AS IMAGENS AQUI
+    // ============================================
+    const FOTOS = [
+        { url: "images/mae1.jpg", titulo: "nunca desistir de mim" },
+        { url: "images/mae2.jpg", titulo: "estar sempre comigo" },
+        { url: "images/mae3.jpg", titulo: "me motivar" },
+        { url: "images/mae4.jpg", titulo: "cuidar de mim" },
+        { url: "images/mae5.jpg", titulo: "seu amor enorme" },
+        { url: "images/mae6.jpg", titulo: "cada sacrifício que teve que fazer" },
+        { url: "images/mae7.jpg", titulo: "pelas refeições e cuidado" },
+        { url: "images/mae8.jpg", titulo: "existir e estar presente" },
+        { url: "images/mae9.jpg", titulo: "corrigir meus erros e me ensinar" }
+    ];
+    
+    // Elementos
+    const candleElem = document.getElementById('candleElem');
+    const flameElem = document.getElementById('flameElem');
+    const blowHint = document.getElementById('blowHint');
+    const finalizeBtn = document.getElementById('finalizeBtn');
+    const lockedMsgDiv = document.getElementById('lockedMsg');
+    const revealedArea = document.getElementById('revealedArea');
+    const fotosGrid = document.getElementById('fotosGrid');
+    
+    let isCandleBlown = false;
+    let isUnlocked = false;
+    
+    // Renderizar galeria de fotos
+    function renderizarGaleria() {
+        if (!fotosGrid) return;
+        fotosGrid.innerHTML = '';
+        
+        FOTOS.forEach((foto) => {
+            const card = document.createElement('div');
+            card.className = 'photo-card';
+            
+            const img = document.createElement('img');
+            img.src = foto.url;
+            img.alt = foto.titulo;
+            
+            img.onerror = function() {
+                this.style.display = 'none';
+                const fallback = document.createElement('div');
+                fallback.style.width = '100%';
+                fallback.style.height = '100%';
+                fallback.style.display = 'flex';
+                fallback.style.flexDirection = 'column';
+                fallback.style.alignItems = 'center';
+                fallback.style.justifyContent = 'center';
+                fallback.style.background = 'linear-gradient(145deg, #ffd9c4, #ffc8ac)';
+                fallback.style.color = '#b64926';
+                fallback.innerHTML = `<span style="font-size: 3rem;">📸</span><br><span style="font-size: 0.75rem; text-align: center; padding: 0.5rem;">${foto.titulo}</span>`;
+                card.appendChild(fallback);
+            };
+            
+            const caption = document.createElement('div');
+            caption.className = 'photo-caption';
+            caption.innerText = foto.titulo;
+            
+            card.appendChild(img);
+            card.appendChild(caption);
+            fotosGrid.appendChild(card);
+        });
+    }
+    
+    // Apagar a vela
+    function blowOutCandle() {
+        if (isCandleBlown) return;
+        isCandleBlown = true;
+        flameElem.classList.add('flame-out');
+        blowHint.innerHTML = '🕯️ Vela apagada! ✨ Agora finalize o presente! ✨';
+        blowHint.style.background = "#e6f0e8";
+        blowHint.style.color = "#2c6e3c";
+        
+        // Vibração se suportado
+        if (navigator.vibrate) navigator.vibrate(100);
+    }
+    
+    // Criar confetes
+    function criarConfetes() {
+        const cores = ['#ff0000', '#ff8800', '#ffff00', '#00ff00', '#0088ff', '#ff00ff', '#ff66cc'];
+        
+        for (let i = 0; i < 180; i++) {
+            const conf = document.createElement('div');
+            conf.classList.add('confetti');
+            const size = Math.random() * 10 + 5;
+            conf.style.width = size + 'px';
+            conf.style.height = size + 'px';
+            conf.style.background = cores[Math.floor(Math.random() * cores.length)];
+            conf.style.left = Math.random() * window.innerWidth + 'px';
+            conf.style.animationDuration = Math.random() * 2.5 + 1.5 + 's';
+            conf.style.animationDelay = Math.random() * 0.5 + 's';
+            document.body.appendChild(conf);
+            setTimeout(() => conf.remove(), 3500);
+        }
+    }
+    
+    // Corações flutuantes
+    function showFloatingHearts() {
+        for (let i = 0; i < 50; i++) {
+            let heart = document.createElement('div');
+            heart.innerHTML = ['❤️', '💖', '💗', '💓', '💕', '💝'][Math.floor(Math.random() * 6)];
+            heart.style.position = 'fixed';
+            heart.style.bottom = '-30px';
+            heart.style.left = Math.random() * window.innerWidth + 'px';
+            heart.style.fontSize = (Math.random() * 20 + 18) + 'px';
+            heart.style.pointerEvents = 'none';
+            heart.style.zIndex = '1000';
+            heart.style.opacity = '0.9';
+            heart.style.transition = 'all 4s ease-out';
+            document.body.appendChild(heart);
+            
+            setTimeout(() => {
+                heart.style.transform = 'translateY(-100vh) rotate(' + (Math.random() * 360) + 'deg)';
+                heart.style.opacity = '0';
+            }, 50);
+            
+            setTimeout(() => heart.remove(), 4200);
+        }
+    }
+    
+    // Desbloquear presente
+    function unlockGift() {
+        if (isUnlocked) return;
+        
+        if (!isCandleBlown) {
+            alert("💨 Primeiro assopre a vela clicando nela! 💨");
+            return;
+        }
+        
+        isUnlocked = true;
+        lockedMsgDiv.style.display = 'none';
+        revealedArea.style.display = 'block';
+        
+        criarConfetes();
+        showFloatingHearts();
+    }
+    
+    // Eventos
+    candleElem.addEventListener('click', blowOutCandle);
+    finalizeBtn.addEventListener('click', unlockGift);
+    
+    // Inicializar
+    renderizarGaleria();
+    
+    console.log("✅ Site pronto! Para adicionar suas fotos, coloque os arquivos na pasta 'images' e atualize o array FOTOS.");
+</script>
+</body>
+</html>
